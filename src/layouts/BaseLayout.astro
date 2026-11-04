@@ -1,0 +1,11 @@
+---
+import '../styles/global.css';
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="hu">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content={description} /><meta name="robots" content="noindex,nofollow,noarchive" /><title>{title} | Kalkulátor Bázis 3.0 – fejlesztés</title></head>
+<body><a class="skip-link" href="#content">Ugrás a tartalomra</a>
+<header class="site-header"><div class="container nav"><a class="brand" href="/" aria-label="Kalkulátor Bázis – kezdőlap"><span class="brand-placeholder">KB</span><span>Kalkulátor Bázis <small>3.0 / FEJLESZTÉS</small></span></a><nav aria-label="Fő navigáció"><a href="/kalkulatorok">Kalkulátorok</a><a href="/aktualis">Aktuális</a></nav></div></header>
+<main id="content"><slot /></main><footer class="container footer">Kalkulátor Bázis 3.0 – különálló fejlesztői prototípus. Nem az éles szolgáltatás.</footer></body></html>
