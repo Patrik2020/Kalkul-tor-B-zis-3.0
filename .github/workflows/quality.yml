@@ -1,0 +1,46 @@
+name: KB 3.0 quality gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, build and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Check Astro and TypeScript, then build
+        run: npm run build
+      - name: Run all tests
+        run: npm test
+      - name: Ensure no important declarations in new styles
+        run: |
+          if grep -RniE '!important' src/styles; then
+            echo "::error::CSS !important is prohibited in KB 3.0 styles"
+            exit 1
+          fi
+      - name: Ensure no inline style attributes in Astro source
+        run: |
+          if grep -RniE ' style=' src/pages src/components src/layouts; then
+            echo "::error::Inline style attributes are prohibited in KB 3.0 Astro files"
+            exit 1
+          fi
