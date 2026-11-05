@@ -1,6 +1,98 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/home.css';
+
+const categories = [
+  { number: '01', icon: '◈', title: 'Pénzügyek', description: 'Fizetés, megtakarítás, befektetés és tudatos tervezés.', count: 'Pénzügyi számítások', tint: 'blue' },
+  { number: '02', icon: '✳', title: 'Egészség', description: 'Mindennapi egészség, mozgás és életmód egyszerűen.', count: 'Egészségkalkulátorok', tint: 'mint' },
+  { number: '03', icon: '⌂', title: 'Építőipar', description: 'Anyagszükséglet és felújítás előre átgondolva.', count: 'Építési számítások', tint: 'sand' },
+  { number: '04', icon: '↗', title: 'Autózás', description: 'Fogyasztás, utazási költségek és autós döntések.', count: 'Autós kalkulátorok', tint: 'lavender' },
+  { number: '05', icon: '◎', title: 'Mindennapok', description: 'Apró és nagy döntésekhez hasznos számítások.', count: 'Napi segédeszközök', tint: 'peach' },
+  { number: '06', icon: '⇄', title: 'Átváltók', description: 'Mértékegységek és gyors átváltások egy helyen.', count: 'Gyors átváltások', tint: 'sky' },
+] as const;
+const popular = [
+  { index: '01', title: 'Nettó–bruttó bér', category: 'PÉNZÜGY', description: 'Tervezd meg a fizetésed, érthetően.', symbol: 'Ft' },
+  { index: '02', title: 'Százalékszámítás', category: 'MINDENNAPOK', description: 'Kedvezmény, változás vagy arány?', symbol: '%' },
+  { index: '03', title: 'BMI-kalkulátor', category: 'EGÉSZSÉG', description: 'Egy gyors tájékozódási kiindulópont.', symbol: 'BMI' },
+  { index: '04', title: 'Üzemanyagköltség', category: 'AUTÓ', description: 'Lásd előre az utazás várható költségét.', symbol: 'km' },
+] as const;
 ---
-<BaseLayout title="Kezdőlap" description="A Kalkulátor Bázis 3.0 új, különálló fejlesztői prototípusa.">
-<section class="hero container"><p class="eyebrow">Új generáció · Fejlesztői prototípus</p><h1>Amikor számolni kell, legyen egyszerű.</h1><p class="lead">Gyors, átlátható számítások és közérthető útmutatók. Most egy új, stabil alapot építünk.</p><div class="actions"><a class="button" href="/kalkulatorok">Kalkulátorok böngészése</a><a class="button secondary" href="/aktualis">Aktuális témák</a></div></section>
-<section class="section container"><h2>Az új rendszer alapjai</h2><div class="grid"><article class="card"><h3>Kalkulátorok</h3><p class="muted">Önálló számítási modulok és tesztelhető logika.</p></article><article class="card"><h3>Aktuális hírek</h3><p class="muted">Hírek, amelyekhez később releváns számítások kapcsolódhatnak.</p></article><article class="card"><h3>Megbízható működés</h3><p class="muted">SEO, akadálymentesség, többnyelvűség és hirdetési szabályok tervezett ellenőrzése.</p></article></div></section></BaseLayout>
+<BaseLayout title="Kezdőlap" description="Kalkulátor Bázis 3.0 – gyors és közérthető számítások, pénzügyi, egészségügyi és mindennapi témákban. Fejlesztői előnézet.">
+  <section class="home-hero" aria-labelledby="hero-heading">
+    <div class="container home-hero__grid">
+      <div class="home-hero__copy">
+        <div class="home-hero__eyebrow"><span class="home-status-dot" aria-hidden="true"></span> AZ EGYSZERŰBB DÖNTÉSEKHEZ</div>
+        <h1 id="hero-heading">A jó döntés<br />egy <span>számítással</span><br />kezdődik.</h1>
+        <p class="home-hero__lead">Hasznos kalkulátorok, érthető magyarázatok és fontos tudnivalók. Minden, ami segít tisztábban látni a számok mögött.</p>
+        <div class="home-hero__actions">
+          <a class="home-button home-button--light" href="/kalkulatorok">Kalkulátorok felfedezése <span aria-hidden="true">↗</span></a>
+          <a class="home-text-link" href="#kategoriak">Böngészés témák szerint <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="home-hero__foot"><span class="home-hero__line"></span><span>ÁTLÁTHATÓ · KÖZÉRTHETŐ · HASZNOS</span></div>
+      </div>
+      <div class="home-hero__visual" aria-label="Illusztratív számítási felület">
+        <div class="home-visual__halo"></div>
+        <div class="home-visual__note home-visual__note--top"><span class="home-visual__note-icon">↗</span><span>Jobb döntések<br /><strong>világos számokkal</strong></span></div>
+        <div class="home-preview-card">
+          <div class="home-preview-card__top"><span class="home-preview-card__mark">KB<span>.</span></span><span class="home-preview-card__dots" aria-hidden="true">•••</span></div>
+          <div class="home-preview-card__label">GYORS SZÁMÍTÁS</div>
+          <div class="home-preview-card__title">Mennyi a 15%-a?</div>
+          <div class="home-preview-card__input"><span>10 000 Ft</span><span>× 15%</span></div>
+          <div class="home-preview-card__result"><small>EREDMÉNY</small><strong>1 500 <span>Ft</span></strong></div>
+          <div class="home-preview-card__bottom"><span class="home-preview-card__check">✓</span> Egyszerű. Átlátható. Gyors.</div>
+        </div>
+        <div class="home-visual__note home-visual__note--bottom"><span class="home-visual__spark">✳</span> A számoknak értelme van.</div>
+      </div>
+    </div>
+    <div class="home-hero__index" aria-hidden="true">01 / 04</div>
+  </section>
+
+  <div class="home-trust-strip"><div class="container home-trust-strip__inner"><span>AMIBEN SEGÍTÜNK</span><span>◈ Pénzügyi tervezés</span><span>✳ Egészségtudatosság</span><span>⌂ Otthon és építkezés</span><span>↗ Mindennapi döntések</span></div></div>
+
+  <section class="home-section home-categories" id="kategoriak" aria-labelledby="categories-heading">
+    <div class="container">
+      <div class="home-section__head"><div><p class="home-kicker">FEDEZD FEL A LEHETŐSÉGEKET</p><h2 id="categories-heading">Miben segíthetünk<br /><em>ma neked?</em></h2></div><p class="home-section__intro">Válassz egy témát, és találd meg a számítást, amire éppen szükséged van.</p></div>
+      <div class="home-category-grid">
+        {categories.map((category) => (
+          <article class={`home-category home-category--${category.tint}`}>
+            <div class="home-category__top"><span class="home-category__number">{category.number} / 06</span><span class="home-category__arrow" aria-hidden="true">↗</span></div>
+            <div class="home-category__art" aria-hidden="true"><span>{category.icon}</span></div>
+            <div class="home-category__body"><p class="home-category__eyebrow">{category.count}</p><h3>{category.title}</h3><p>{category.description}</p><span class="home-category__coming">Kategória hamarosan</span></div>
+          </article>
+        ))}
+      </div>
+      <p class="home-section__footnote">A 3.0 kategóriaoldalai még készülnek. A kártyák a tervezett témaköröket mutatják.</p>
+    </div>
+  </section>
+
+  <section class="home-section home-popular" aria-labelledby="popular-heading">
+    <div class="container">
+      <div class="home-section__head home-section__head--compact"><div><p class="home-kicker">JÓ KIINDULÓPONTOK</p><h2 id="popular-heading">Amire a legtöbben<br /><em>kíváncsiak.</em></h2></div><a href="/kalkulatorok" class="home-inline-link">Kalkulátorok oldala <span aria-hidden="true">↗</span></a></div>
+      <div class="home-popular-grid">
+        {popular.map((item) => (
+          <article class="home-popular-card">
+            <div class="home-popular-card__top"><span>{item.index} / KALKULÁTOR</span><span class="home-popular-card__symbol" aria-hidden="true">{item.symbol}</span></div>
+            <div><p class="home-popular-card__category">{item.category}</p><h3>{item.title}</h3><p>{item.description}</p></div>
+            <span class="home-popular-card__pending">Fejlesztés alatt <span aria-hidden="true">↗</span></span>
+          </article>
+        ))}
+      </div>
+      <p class="home-section__footnote">Bemutató kártyák, nem valós látogatottsági rangsor. A kalkulátorok 3.0-s változatai még fejlesztés alatt állnak.</p>
+    </div>
+  </section>
+
+  <section class="home-editorial" aria-labelledby="editorial-heading">
+    <div class="container home-editorial__grid">
+      <div class="home-editorial__copy"><p class="home-kicker">TÖBB, MINT KALKULÁTOR</p><h2 id="editorial-heading">Nem csak a szám.<br /><em>A mögötte lévő<br />történet is számít.</em></h2><p>Az aktuális változások akkor igazán hasznosak, ha érted, mit jelentenek a saját helyzetedben. Ezért kapcsoljuk majd össze a híreket a hozzájuk illő kalkulátorokkal.</p><a href="/aktualis" class="home-button home-button--dark">Az Aktuális rovat előnézete <span aria-hidden="true">↗</span></a></div>
+      <div class="home-editorial__panel">
+        <div class="home-editorial__panel-top"><span>AKTUÁLIS / TERVEZETT ROVAT</span><span>✳</span></div>
+        <div class="home-editorial__panel-art" aria-hidden="true"><span class="home-editorial__ring"></span><span class="home-editorial__art-number">2027<span>.</span></span></div>
+        <div class="home-editorial__panel-bottom"><span>01 — HÍREK ÉS MAGYARÁZATOK</span><h3>Mi változik, és ez mit jelent neked?</h3><p>Hamarosan forrásolt hírek, frissítési jelzések és kapcsolódó számítások.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section home-principles" aria-labelledby="principles-heading"><div class="container"><div class="home-section__head home-section__head--compact"><div><p class="home-kicker">AHOGY GONDOLKODUNK</p><h2 id="principles-heading">Egyszerűnek látszik.<br /><em>Átgondoltan készül.</em></h2></div></div><div class="home-principles__grid"><div><span class="home-principles__icon">01</span><h3>Érthető elsőre</h3><p>Világos kérdések, jól olvasható eredmények, fölösleges bonyolítás nélkül.</p></div><div><span class="home-principles__icon">02</span><h3>Használható mindenhol</h3><p>Telefonon és nagy képernyőn is követhető felület, akadálymentes szemlélettel.</p></div><div><span class="home-principles__icon">03</span><h3>Felelősen fejlesztve</h3><p>Elkülönített számítási logika, tesztelhető működés és átlátható tájékoztatás.</p></div></div></div></section>
+
+  <section class="home-final-cta" aria-labelledby="final-cta-heading"><div class="container home-final-cta__inner"><div><p class="home-kicker">INDULHATUNK?</p><h2 id="final-cta-heading">A következő jó döntés<br /><em>itt kezdődik.</em></h2></div><a href="/kalkulatorok" class="home-button home-button--light">Nézd meg a demót <span aria-hidden="true">↗</span></a></div></section>
+</BaseLayout>

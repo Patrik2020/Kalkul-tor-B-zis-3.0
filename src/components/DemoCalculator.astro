@@ -1,4 +1,4 @@
-<div class="card" style="max-width:500px"><h2>Százalékszámító – demó</h2><form id="percent-demo"><p><label for="amount">Összeg</label><input id="amount" type="number" value="10000" step="any" required /></p><p><label for="percent">Százalék (%)</label><input id="percent" type="number" value="15" step="any" required /></p><button class="button" type="submit">Számítás</button><output id="percent-result" aria-live="polite">Eredmény: 1 500</output></form><p class="muted">Demó – nem pénzügyi vagy adótanácsadás.</p></div>
+<div class="card demo-calculator"><h2>Százalékszámító – demó</h2><form id="percent-demo"><p><label for="amount">Összeg</label><input id="amount" type="number" value="10000" step="any" required /></p><p><label for="percent">Százalék (%)</label><input id="percent" type="number" value="15" step="any" required /></p><button class="button" type="submit">Számítás</button><output id="percent-result" aria-live="polite">Eredmény: 1 500</output></form><p class="muted">Demó – nem pénzügyi vagy adótanácsadás.</p></div>
 <script>
 import { percentageOf } from '../lib/math';
 const form = document.querySelector<HTMLFormElement>('#percent-demo');
