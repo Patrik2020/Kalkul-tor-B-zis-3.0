@@ -137,3 +137,17 @@ body {background:var(--home-cream);color:var(--home-ink)}
  .home-section__head h2,.home-editorial h2,.home-final-cta h2 {font-size:2.7rem}
 }
 @media(prefers-reduced-motion:reduce) {html {scroll-behavior:auto}.home-button {transition:none}}
+
+/* Editorial hero illustration — replaceable by the user's future photo asset. */
+.home-hero__visual--editorial{isolation:isolate}
+.home-editorial-art{position:relative;width:min(490px,100%);aspect-ratio:1;display:grid;place-items:center}
+.home-editorial-art__orbit{position:absolute;border:1px solid #b9d7ff60;border-radius:50%}
+.home-editorial-art__orbit--outer{inset:0;box-shadow:0 0 0 45px #ffffff08}
+.home-editorial-art__orbit--inner{inset:14%;border-style:dashed}
+.home-editorial-art__square{position:absolute;width:57%;height:57%;border-radius:26%;transform:rotate(-23deg);background:linear-gradient(145deg,#f2f6f8,#b9d8ed);box-shadow:22px 26px 65px #001e4d65}
+.home-editorial-art__disc{position:absolute;width:36%;height:36%;border-radius:50%;transform:translate(29%,20%);background:linear-gradient(145deg,#87baff,#316ebc);box-shadow:15px 18px 30px #12387860}
+.home-editorial-art__asterisk{position:relative;transform:translate(-55%,-40%);font-size:clamp(6rem,14vw,12rem);color:#143c7b;line-height:1}
+.home-editorial-art__label{position:absolute;font-size:.66rem;letter-spacing:.16em;font-weight:800;color:#d9e9fb}
+.home-editorial-art__label--top{top:9%;right:3%}
+.home-editorial-art__label--bottom{bottom:7%;left:1%}
+@media(max-width:520px){.home-editorial-art{width:90%}.home-editorial-art__asterisk{font-size:7rem}}

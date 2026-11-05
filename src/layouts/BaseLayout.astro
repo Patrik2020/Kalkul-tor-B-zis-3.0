@@ -1,11 +1,89 @@
 ---
 import '../styles/global.css';
+import '../styles/shell.css';
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
 ---
 <!doctype html>
 <html lang="hu">
-<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content={description} /><meta name="robots" content="noindex,nofollow,noarchive" /><title>{title} | Kalkulátor Bázis 3.0 – fejlesztés</title></head>
-<body><a class="skip-link" href="#content">Ugrás a tartalomra</a>
-<header class="site-header"><div class="container nav"><a class="brand" href="/" aria-label="Kalkulátor Bázis – kezdőlap"><span class="brand-placeholder">KB</span><span>Kalkulátor Bázis <small>3.0 / FEJLESZTÉS</small></span></a><nav aria-label="Fő navigáció"><a href="/kalkulatorok">Kalkulátorok</a><a href="/aktualis">Aktuális</a></nav></div></header>
-<main id="content"><slot /></main><footer class="container footer">Kalkulátor Bázis 3.0 – különálló fejlesztői prototípus. Nem az éles szolgáltatás.</footer></body></html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="color-scheme" content="light dark" />
+  <title>{title} | Kalkulátor Bázis 3.0 – fejlesztés</title>
+  <script is:inline>
+    try { const mode = localStorage.getItem('kb-theme'); if (mode === 'dark' || mode === 'light') document.documentElement.dataset.theme = mode; } catch {}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Ugrás a tartalomra</a>
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand" href="/" aria-label="Kalkulátor Bázis – kezdőlap">
+        <img class="brand__original" src="https://kalkulatorbazis.hu/favicon/web-app-manifest-512x512.png" alt="" width="46" height="46" />
+        <span class="brand__name">Kalkulátor <strong>Bázis</strong><small>3.0 · FEJLESZTŐI ELŐNÉZET</small></span>
+      </a>
+      <nav class="site-navigation" aria-label="Fő navigáció">
+        <a href="/">Főoldal</a><a href="/kalkulatorok">Kalkulátorok</a><a href="/aktualis">Aktuális</a>
+      </nav>
+      <div class="site-tools">
+        <label class="sr-only" for="site-language">Nyelv kiválasztása</label>
+        <select id="site-language" class="site-tool-select" aria-label="Nyelv kiválasztása">
+          <option value="hu">HU</option><option value="en">EN</option><option value="de">DE</option>
+        </select>
+        <button class="site-tool-button" id="theme-toggle" type="button" aria-label="Sötét mód bekapcsolása" aria-pressed="false">◐</button>
+        <button class="site-tool-button" id="accessibility-toggle" type="button" aria-label="Akadálymentességi beállítások" aria-expanded="false" aria-controls="accessibility-panel">♿</button>
+      </div>
+    </div>
+    <div id="accessibility-panel" class="accessibility-panel container" hidden>
+      <strong>Megjelenítési beállítások</strong>
+      <label><input id="accessibility-large-text" type="checkbox" /> Nagyobb betűméret</label>
+      <label><input id="accessibility-contrast" type="checkbox" /> Erősebb kontraszt</label>
+    </div>
+  </header>
+  <main id="content"><slot /></main>
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div><div class="site-footer__brand">Kalkulátor <strong>Bázis</strong></div><p>Érthető számítások és hasznos tudnivalók egy helyen.</p><small>3.0 fejlesztői előnézet · Nem az éles szolgáltatás.</small></div>
+      <div><h2>Felfedezés</h2><a href="/kalkulatorok">Kalkulátorok</a><a href="/aktualis">Aktuális hírek</a><a href="/">Főoldal</a></div>
+      <div><h2>Tájékoztatás</h2><p>Adatvédelem, sütikezelés, impresszum és jogi tájékoztatók: a 3.0-s oldalak előkészítés alatt.</p></div>
+      <div><h2>Segítség</h2><p>Kérdésed van a számításokról? A súgó hamarosan itt is elérhető.</p><button type="button" class="site-footer__help" data-help-open>Súgó megnyitása</button></div>
+    </div>
+    <div class="container site-footer__bottom"><span>© {new Date().getFullYear()} Kalkulátor Bázis</span><span>Független fejlesztői prototípus</span></div>
+  </footer>
+  <button type="button" class="site-help-trigger" data-help-open aria-controls="site-help-panel" aria-expanded="false">? <span>Segítség</span></button>
+  <aside class="site-help-panel" id="site-help-panel" hidden aria-label="Segítség">
+    <div class="site-help-panel__head"><strong>Segítség</strong><button type="button" id="help-close" aria-label="Segítség bezárása">×</button></div>
+    <p>A 3.0 súgója még készül. Addig a kalkulátorok demóját és az Aktuális rovat előnézetét böngészheted.</p>
+    <a href="/kalkulatorok">Kalkulátorok</a><a href="/aktualis">Aktuális</a>
+  </aside>
+  <script>
+    const root = document.documentElement;
+    const theme = document.querySelector<HTMLButtonElement>('#theme-toggle');
+    const accessibility = document.querySelector<HTMLButtonElement>('#accessibility-toggle');
+    const panel = document.querySelector<HTMLElement>('#accessibility-panel');
+    const largeText = document.querySelector<HTMLInputElement>('#accessibility-large-text');
+    const contrast = document.querySelector<HTMLInputElement>('#accessibility-contrast');
+    const help = document.querySelector<HTMLElement>('#site-help-panel');
+    const helpTriggers = document.querySelectorAll<HTMLButtonElement>('[data-help-open]');
+    const helpClose = document.querySelector<HTMLButtonElement>('#help-close');
+    const language = document.querySelector<HTMLSelectElement>('#site-language');
+    const stored = (key: string) => { try { return localStorage.getItem(key); } catch { return null; } };
+    const save = (key: string, value: string) => { try { localStorage.setItem(key, value); } catch {} };
+    const syncTheme = () => { const dark = root.dataset.theme === 'dark'; theme?.setAttribute('aria-pressed', String(dark)); theme?.setAttribute('aria-label', dark ? 'Világos mód bekapcsolása' : 'Sötét mód bekapcsolása'); };
+    syncTheme();
+    theme?.addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; save('kb-theme', root.dataset.theme); syncTheme(); });
+    if (largeText) { largeText.checked = stored('kb-large-text') === 'true'; root.classList.toggle('large-text', largeText.checked); largeText.addEventListener('change', () => { root.classList.toggle('large-text', largeText.checked); save('kb-large-text', String(largeText.checked)); }); }
+    if (contrast) { contrast.checked = stored('kb-high-contrast') === 'true'; root.classList.toggle('high-contrast', contrast.checked); contrast.addEventListener('change', () => { root.classList.toggle('high-contrast', contrast.checked); save('kb-high-contrast', String(contrast.checked)); }); }
+    accessibility?.addEventListener('click', () => { if (!panel) return; panel.hidden = !panel.hidden; accessibility.setAttribute('aria-expanded', String(!panel.hidden)); });
+    const setHelp = (open: boolean) => { if (!help) return; help.hidden = !open; helpTriggers.forEach(button => button.setAttribute('aria-expanded', String(open))); if (open) helpClose?.focus(); };
+    helpTriggers.forEach(button => button.addEventListener('click', () => setHelp(help?.hidden ?? true)));
+    helpClose?.addEventListener('click', () => setHelp(false));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') { setHelp(false); if (panel && !panel.hidden) { panel.hidden = true; accessibility?.setAttribute('aria-expanded', 'false'); } } });
+    // Do not offer a false translation: locale routes will be enabled when complete.
+    language?.addEventListener('change', () => { if (!language) return; if (language.value !== 'hu') { language.value = 'hu'; window.alert('Az angol és német fordítások még készülnek. A nyelvváltást a kész fordításokkal aktiváljuk.'); } });
+  </script>
+</body>
+</html>
